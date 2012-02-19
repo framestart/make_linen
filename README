@@ -1,0 +1,5 @@
+make_linen is a small python script to create linen-line background images
+
+Requires:
+	numpy http://numpy.scipy.org/
+	matplotlib http://matplotlib.sourceforge.net/
