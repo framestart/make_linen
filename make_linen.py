@@ -30,7 +30,7 @@ def add_fiber(mask, fiber, pos, horizontal=True):
 			mask[0:diff, pos[0]] += fiber[-diff:]
 
 
-def add_fibers(mask, n_fibers=0, fiber_len = 150, fiber_opacity = 0.08, horizontal=True, opacities={}):
+def add_fibers(mask, n_fibers=0, fiber_len = 150, fiber_opacity = 0.1, horizontal=True, opacities={}):
 	"""Add the specified number of fibers into the given image."""
 	
 	[height, width] = shape(mask)
@@ -39,14 +39,17 @@ def add_fibers(mask, n_fibers=0, fiber_len = 150, fiber_opacity = 0.08, horizont
 		# randomize fiber length slightly
 		fiber_len_r = int(fiber_len + randn()*fiber_len/5)
 		
-		fiber = ones(fiber_len_r) * fiber_opacity
+		# initialize the fiber
+		fiber = ones(fiber_len_r)
+		
+		# modify the fiber so that it's strong (opaque) in the middle and 
+		# fades off towards the edges
 		if (not opacities.has_key(fiber_len_r)):
 			opacities[fiber_len_r] = ones(fiber_len_r)
 			for p in range(fiber_len_r):
 				hl = round(fiber_len_r/2)
 				opacities[fiber_len_r][p] = (hl - abs(hl - p))/hl
-
-		# randomize opacity
+		# apply (slightly randomized) opacity
 		fiber = fiber * opacities[fiber_len_r] * fiber_opacity * rand()
 		
 		# randomize position
@@ -58,18 +61,18 @@ def add_fibers(mask, n_fibers=0, fiber_len = 150, fiber_opacity = 0.08, horizont
 
 
 # linen parameters
-fiber_len = 200			# average lenght of a single fiber
-fiber_opacity = 0.06	# average fiber opacity
-n_fibers = 50000		# number of horizontal/vertical fibers
-base_intensity = 0.03	# base intensity of the image (before adding fibers)
+fiber_len = 150			# average lenght of a single fiber
+fiber_opacity = 0.02	# average fiber opacity
+n_fibers = 20000		# number of horizontal/vertical fibers
+base_intensity = 0.0	# base intensity of the image (before adding fibers)
 
 im_size = [900, 1440]
 
 im = ones(im_size) * base_intensity
 
 mask = zeros(im_size)
-mask = add_fibers(mask, n_fibers, fiber_len)
-mask = add_fibers(mask, n_fibers, fiber_len, horizontal=False)
+mask = add_fibers(mask, n_fibers, fiber_len, fiber_opacity)
+mask = add_fibers(mask, n_fibers, fiber_len, fiber_opacity, horizontal=False)
 
 im += mask
 
