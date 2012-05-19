@@ -2,6 +2,7 @@ from numpy.random import rand, randn
 from numpy import ones, zeros, shape
 from matplotlib.pyplot import imsave, gray
 
+import pdb
 
 def add_fiber(mask, fiber, pos, horizontal=True):
 	"""Add a fiber to mask (with wrap-around).
@@ -15,6 +16,12 @@ def add_fiber(mask, fiber, pos, horizontal=True):
 	[height, width] = shape(mask)
 	fiber_len = len(fiber)
 	if (horizontal):
+		# diff = pos[0] + fiber_len - width
+		# if (diff < 0):
+			# diff = 0
+		# pdb.set_trace()
+		# mask[pos[1], pos[0]:pos[0] + fiber_len - diff] += fiber[:-diff]
+		# mask[pos[1], 0:diff] += fiber[-diff:]
 		if (width >= pos[0] + fiber_len):
 			mask[pos[1], pos[0]:pos[0] + fiber_len] += fiber
 		else:
@@ -59,22 +66,26 @@ def add_fibers(mask, n_fibers=0, fiber_len = 150, fiber_opacity = 0.1, horizonta
 
 	return mask
 
+def main():
+	# linen parameters
+	fiber_len = 50			# average lenght of a single fiber
+	fiber_opacity = -0.005	# average fiber opacity
+	n_fibers = 50000		# number of horizontal/vertical fibers
+	base_intensity = 0.9	# base intensity of the image (before adding fibers)
 
-# linen parameters
-fiber_len = 150			# average lenght of a single fiber
-fiber_opacity = 0.02	# average fiber opacity
-n_fibers = 20000		# number of horizontal/vertical fibers
-base_intensity = 0.0	# base intensity of the image (before adding fibers)
+	im_size = [900, 1440]
 
-im_size = [900, 1440]
+	im = ones(im_size) * base_intensity
 
-im = ones(im_size) * base_intensity
+	mask = zeros(im_size)
+	mask = add_fibers(mask, n_fibers, fiber_len, fiber_opacity)
+	mask = add_fibers(mask, n_fibers, fiber_len, fiber_opacity, horizontal=False)
 
-mask = zeros(im_size)
-mask = add_fibers(mask, n_fibers, fiber_len, fiber_opacity)
-mask = add_fibers(mask, n_fibers, fiber_len, fiber_opacity, horizontal=False)
+	im += mask
 
-im += mask
+	gray()
+	imsave('linen.png', im, vmin=0.0, vmax=1.0)
 
-gray()
-imsave('linen.png', im, vmin=0.0, vmax=1.0)
+
+if __name__ == "__main__":
+	main()	
