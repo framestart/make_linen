@@ -7,11 +7,11 @@ import pdb
 def add_fiber(mask, fiber, pos, horizontal=True):
 	"""Add a fiber to mask (with wrap-around).
 	
-	mask 		-- image to add to
-	fiber 		-- fiber (1D array of intensitties)
-	pos 		-- [x, y] position within the image
-	horizontal 	-- set to False for vertical fibers
-	
+	Args:
+		mask: image to add to
+		fiber: fiber (1D array of intensitties)
+		pos: [x, y] position within the image
+		horizontal: set to False for vertical fibers
 	"""
 	[height, width] = shape(mask)
 	fiber_len = len(fiber)
@@ -39,7 +39,6 @@ def add_fiber(mask, fiber, pos, horizontal=True):
 
 def add_fibers(mask, n_fibers=0, fiber_len = 150, fiber_opacity = 0.1, horizontal=True, opacities={}):
 	"""Add the specified number of fibers into the given image."""
-	
 	[height, width] = shape(mask)
 
 	for f in range(n_fibers):
@@ -66,13 +65,16 @@ def add_fibers(mask, n_fibers=0, fiber_len = 150, fiber_opacity = 0.1, horizonta
 
 	return mask
 
-def make_linen(fiber_len = 50, fiber_opacity = 0.01):
-	# linen parameters
-	fiber_len = 50			# average lenght of a single fiber
-	fiber_opacity = 0.01	# average fiber opacity
-	n_fibers = 50000		# number of horizontal/vertical fibers
-	base_intensity = 0.1		# base intensity of the image (before adding fibers)
 
+def make_linen(fiber_len=50, fiber_opacity=0.01, n_fibers=50000, base_intensity=0.1):
+	"""Create linen texture image and save as linen.png
+
+	Args
+		fiber_len: average lenght of a single fiber
+		fiber_opacity: average opacity of a single fiber
+		n_fibers: number of fibers in each direction (horizontal and vertical)
+		base_intensity: base intensity of the image before adding any fibers
+	"""
 	im_size = [900, 1440]
 
 	im = ones(im_size) * base_intensity
