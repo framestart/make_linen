@@ -66,12 +66,12 @@ def add_fibers(mask, n_fibers=0, fiber_len = 150, fiber_opacity = 0.1, horizonta
 
 	return mask
 
-def main():
+def make_linen(fiber_len = 50, fiber_opacity = 0.01):
 	# linen parameters
 	fiber_len = 50			# average lenght of a single fiber
-	fiber_opacity = -0.005	# average fiber opacity
+	fiber_opacity = 0.01	# average fiber opacity
 	n_fibers = 50000		# number of horizontal/vertical fibers
-	base_intensity = 0.9	# base intensity of the image (before adding fibers)
+	base_intensity = 0.1		# base intensity of the image (before adding fibers)
 
 	im_size = [900, 1440]
 
@@ -88,4 +88,4 @@ def main():
 
 
 if __name__ == "__main__":
-	main()	
+	make_linen()	
