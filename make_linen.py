@@ -93,7 +93,7 @@ def make_linen(fiber_len=50, fiber_opacity=0.01, n_fibers=20000,
 	im += mask
 
 	gray()
-	imsave('linen.png', im, vmin=0.0, vmax=1.0)
+	imsave('linen.jpg', im, vmin=0.0, vmax=1.0)
 
 
 if __name__ == '__main__':
