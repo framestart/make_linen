@@ -78,7 +78,7 @@ def make_linen(fiber_len=50, fiber_opacity=0.01, n_fibers=20000,
 		base_intensity: base intensity of the image before adding any fibers
 
 	"""
-	im_size = (200, 722)
+	im_size = (400, 400)
 
 	im = np.ones(im_size) * base_intensity
 
