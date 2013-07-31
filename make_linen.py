@@ -1,6 +1,6 @@
 import numpy as np
 from numpy.random import rand, randn
-from matplotlib.pyplot import imsave, gray
+import matplotlib.pyplot as plt
 
 
 def add_fiber(mask, fiber, pos, horizontal=True):
@@ -92,8 +92,8 @@ def make_linen(fiber_len=50, fiber_opacity=0.01, n_fibers=20000,
 
 	im += mask
 
-	gray()
-	imsave('linen.jpg', im, vmin=0.0, vmax=1.0)
+	plt.gray()
+	plt.imsave('linen.jpg', im, vmin=0.0, vmax=1.0)
 
 
 if __name__ == '__main__':
